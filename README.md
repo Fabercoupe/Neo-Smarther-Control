@@ -1,3 +1,5 @@
+# ITALIANO
+
 # Neo-Smarther-Control
 Card avanzata e minimalista per termostati BTicino Smarther su Home Assistant, con grafico integrato e animazioni CSS
 Una card personalizzata per Home Assistant (Lovelace) dal design moderno e asimmetrico, progettata specificamente per termostati (testata su BTicino Smarther).
@@ -23,6 +25,8 @@ Per far funzionare questa card, devi aver installato i seguenti plugin tramite H
 3. Crea una nuova card "Manuale" nella tua dashboard di Home Assistant.
 4. Incolla il codice e sostituisci `climate.smarther_thermostat_heater_cooler` con l'entità del tuo termostato.
 
+
+# INGLESE
 
 # Neo-Smarther-Control
 Advanced and minimalist card for BTicino Smarther thermostats on Home Assistant, featuring integrated graphs and CSS animations.
