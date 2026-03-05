@@ -26,6 +26,16 @@ Per far funzionare questa card, devi aver installato i seguenti plugin tramite H
 4. Incolla il codice e sostituisci `climate.smarther_thermostat_heater_cooler` con l'entità del tuo termostato.
 
 
+---
+
+## 💖 Sostieni lo sviluppo
+
+Se trovi utili le mie repository e vuoi sostenere il mio lavoro, puoi offrirmi un caffè tramite PayPal! Ogni contributo è molto apprezzato.
+
+[![Donate with PayPal](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://www.paypal.me/Fabercoupe)
+
+---
+
 # INGLESE
 
 # Neo-Smarther-Control
@@ -53,3 +63,13 @@ To use this card, you must have the following plugins installed via HACS:
 2. Copy the code from the `card.yaml` file in this repository.
 3. Create a new "Manual" card in your Home Assistant dashboard.
 4. Paste the code and replace `climate.smarther_thermostat_heater_cooler` with your thermostat entity ID.
+
+---
+
+## 💖 Support the Development
+
+If you find my repositories useful and would like to support my work, feel free to buy me a coffee via PayPal! Every contribution is greatly appreciated and helps me keep the projects alive.
+
+[![Donate with PayPal](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://www.paypal.me/Fabercoupe)
+
+---
