@@ -1,0 +1,158 @@
+type: custom:button-card
+entity: climate.smarther_thermostat_heater_cooler
+show_name: false
+show_icon: false
+tap_action:
+  action: none
+styles:
+  grid:
+    - grid-template-areas: "'temp heat_bar side_panel'"
+    - grid-template-columns: 1fr 5px 85px
+  card:
+    - padding: 0px
+    - border-radius: 12px 0px 12px 0px
+    - background-color: "#1c1c1c"
+    - height: 160px
+    - border: 3px solid rgba(252, 3, 3, 0.3)
+    - overflow: hidden
+  custom_fields:
+    temp:
+      - justify-self: stretch
+      - align-self: center
+      - z-index: 1
+    heat_bar:
+      - background-color: "#444"
+      - height: 100%
+      - width: 5px
+    side_panel:
+      - background-color: "#222"
+      - border-left: 1px solid
+      - z-index: 10
+custom_fields:
+  graph_bg:
+    card:
+      type: custom:mini-graph-card
+      entities:
+        - entity: climate.smarther_thermostat_heater_cooler
+          attribute: current_temperature
+          color: red
+      line_width: 4
+      font_size: 0
+      height: 100
+      hours_to_show: 12
+      show:
+        name: false
+        icon: false
+        state: false
+        legend: false
+        fill: fade
+        labels: false
+      card_mod:
+        style: |
+          ha-card {
+            background: none !important;
+            border: none !important;
+            position: absolute !important;
+            bottom: -5px !important;
+            left: 0 !important;
+            width: calc(100% - 90px) !important;
+            z-index: 0 !important;
+          }
+  temp: |
+    [[[
+      const t = entity.attributes.current_temperature.toFixed(1);
+      const s = entity.attributes.temperature;
+      const parts = t.split('.');
+      return `
+        <div style="display: flex; flex-direction: column; align-items: center; pointer-events: none;">
+          <div style="display: flex; align-items: center; font-size: 13px; font-weight: 600; color: #ffffff; margin-bottom: -5px;">
+            <span style="margin-right: 5px; text-transform: uppercase;">SET ${s}°</span>
+            <ha-icon icon="mdi:fire" style="color: #ff5722; --mdc-icon-size: 18px;"></ha-icon>
+          </div>
+          <div style="display: flex; align-items: baseline; color: white; font-family: 'arial', bold, monospace; filter: drop-shadow(0 0 2px white);">
+            <span style="font-size: 85px; font-weight: 900; letter-spacing: -4px;">${parts[0]}</span>
+            <span style="font-size: 35px; font-weight: 700; margin-left: 2px;">.${parts[1]}</span>
+          </div>
+        </div>`;
+    ]]]
+  heat_bar: |
+    [[[
+      const isHeating = (entity.attributes.hvac_action === 'heating');
+      const anim = isHeating ? 'animation: v-scroll 2s linear infinite;' : '';
+      const color = isHeating ? 'red' : 'transparent';
+      return `
+        <div style="width: 100%; height: 100%; background: ${color}; ${anim}"></div>
+        <style>
+          @keyframes v-scroll { 
+            0% { clip-path: inset(100% 0 0 0); } 
+            100% { clip-path: inset(0 0 0 0); } 
+          }
+        </style>`;
+    ]]]
+  side_panel:
+    card:
+      type: custom:button-card
+      styles:
+        card:
+          - background: none
+          - border: none
+          - height: 160px
+          - padding: 0px
+        grid:
+          - grid-template-areas: "'u' 'p' 'd'"
+          - grid-template-rows: 1fr 1fr 1fr
+      custom_fields:
+        u:
+          card:
+            type: custom:button-card
+            icon: mdi:chevron-up
+            tap_action:
+              action: call-service
+              service: climate.set_temperature
+              service_data:
+                entity_id: climate.smarther_thermostat_heater_cooler
+                temperature: "[[[ return entity.attributes.temperature + 0.5 ]]]"
+            styles:
+              card:
+                - background: none
+                - border: none
+                - height: 53px
+              icon:
+                - color: "#ff4d4d"
+                - width: 45px
+        p:
+          card:
+            type: custom:button-card
+            icon: mdi:power
+            tap_action:
+              action: call-service
+              service: climate.set_hvac_mode
+              service_data:
+                entity_id: climate.smarther_thermostat_heater_cooler
+                hvac_mode: "[[[ return entity.state === 'off' ? 'heat' : 'off' ]]]"
+            styles:
+              card:
+                - background: none
+                - border: none
+                - height: 54px
+              icon:
+                - color: white
+                - width: 28px
+        d:
+          card:
+            type: custom:button-card
+            icon: mdi:chevron-down
+            tap_action:
+              action: call-service
+              service: climate.set_temperature
+              service_data:
+                entity_id: climate.smarther_thermostat_heater_cooler
+                temperature: "[[[ return entity.attributes.temperature - 0.5 ]]]"
+            styles:
+              card:
+                - background: none
+                - border: none
+                - height: 53px
+              icon:
+                - color: "#4da6ff"
+                - width: 45px
